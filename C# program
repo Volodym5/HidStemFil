@@ -1,0 +1,41 @@
+using System;
+using System.IO;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Specify directories or files related to Steam
+        string[] pathsToHide = {
+            @"C:\Program Files (x86)\Steam",        // Steam installation folder
+            @"C:\Users\YourUserName\Downloads",     // Your downloads folder (change as needed)
+            @"C:\Games\SteamGames"                  // Example folder where Steam games might be installed
+        };
+
+        // Loop through paths and hide each
+        foreach (string path in pathsToHide)
+        {
+            HideSteamFiles(path);
+        }
+
+        Console.WriteLine("Steam-related files and folders have been hidden.");
+    }
+
+    static void HideSteamFiles(string path)
+    {
+        if (Directory.Exists(path))
+        {
+            Directory.SetAttributes(path, FileAttributes.Hidden | FileAttributes.System); // Hide the folder
+            Console.WriteLine($"Hid directory: {path}");
+        }
+        else if (File.Exists(path))
+        {
+            File.SetAttributes(path, FileAttributes.Hidden | FileAttributes.System); // Hide the file
+            Console.WriteLine($"Hid file: {path}");
+        }
+        else
+        {
+            Console.WriteLine($"Path does not exist: {path}");
+        }
+    }
+}
